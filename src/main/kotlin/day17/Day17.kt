@@ -23,10 +23,8 @@ data class Step(val x: Int, val y: Int, val dx: Int, val dy: Int)
 data class Target(val xRange: IntRange, val yRange: IntRange)
 
 fun Target.isValidDx(dx: Int): Boolean = generateSequence(Pair(0, dx)) { (x, dx) -> Pair(x + dx, dx - dx.sign) }
-    .takeWhile { (_, dx) -> dx > 0 }
-    .map { (x, _) -> x }
-    .takeWhile { n -> n <= xRange.last }
-    .any { it in xRange }
+    .takeWhile { (x, dx) -> dx > 0 && x <= xRange.last }
+    .any { (x, _) -> x in xRange }
 
 fun Target.validDxs(): List<Int> = (1..(xRange.last)).filter { isValidDx(it) }
 
