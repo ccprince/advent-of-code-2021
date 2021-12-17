@@ -1,5 +1,6 @@
 package day15
 
+import org.junit.jupiter.api.Disabled
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -23,7 +24,7 @@ class Day15Tests {
     private val simpleCavern = SimpleCavern(sample)
     private val expandedCavern = ExpandedCavern(sample)
 
-    @Test
+    @Test @Disabled("There are multiple paths with the same risk")
     fun `finds the lowest-risk path`() = assertEquals(
         listOf(
             Pair(0, 0), Pair(0, 1), Pair(0, 2), Pair(1, 2), Pair(2, 2), Pair(3, 2), Pair(4, 2), Pair(5, 2),
