@@ -5,7 +5,7 @@ import kotlin.math.sign
 
 fun main() {
     val target = Target(xRange = 236..262, yRange = -78..-58)
-    println("The flashiest height is ${flashiestHeight(target)}")
+    println("The flashiest height is ${target.flashiestHeight()}")
 }
 
 typealias Point = Pair<Int, Int>
@@ -52,13 +52,13 @@ fun pathToTarget(dx: Int, dy: Int, target: Target): List<Point> =
 // depth of the target is guaranteed to miss it. At y = 0, the probe's dy will be at least as fast as its initial dy.
 // So, the depth of the target is an upper bound for dy.
 //
-fun findAccuratePaths(target: Target): List<Path> = target.validDxs().flatMap { dx ->
+fun Target.findAccuratePaths(): List<Path> = validDxs().flatMap { dx ->
     generateSequence(0) { it + 1 }
-        .takeWhile { it <= abs(target.yRange.minOf { it })}
-        .map { dy -> pathToTarget(dx, dy, target) }
-        .filter { it.hits(target) }
+        .takeWhile { it <= abs(yRange.minOf { it })}
+        .map { dy -> pathToTarget(dx, dy, this) }
+        .filter { it.hits(this) }
         .toList()
 }
 
-fun flashiestHeight(target: Target): Int = maxHeight(findAccuratePaths(target))
+fun Target.flashiestHeight(): Int = maxHeight(findAccuratePaths())
 fun maxHeight(paths: List<Path>): Int = paths.maxOf { path -> path.maxOf { (_, y) -> y } }

@@ -64,7 +64,7 @@ class Day17Tests {
     private val sampleTarget = Target(xRange = 20..30, yRange = -10..-5)
 
     @Test
-    fun `gets the height of the flashiest launch`() = assertEquals(45, flashiestHeight(sampleTarget))
+    fun `gets the height of the flashiest launch`() = assertEquals(45, sampleTarget.flashiestHeight())
 
     @TestFactory
     fun `determines if a path hits the target`() = testData.map { pathToTarget(it.dx, it.dy, sampleTarget) }
@@ -75,27 +75,3 @@ class Day17Tests {
             }
         }
 }
-/*
-
-...............3..3............
-...........3........3..........
-...............................
-......3....2...2.....3.........
-......2...........2............
-...............................
-S...................23.........
-...............................
-...............................
-.....................2.........
-.....................3.........
-....................TTTTTTTTTTT
-....................TTTTTTTTTTT
-....................T2TTTTTTTTT
-....................TTTTTTTTTTT
-....................T3TTTTTTTTT
-....................TTTTTTTTTTT
-
-
-
-
- */
