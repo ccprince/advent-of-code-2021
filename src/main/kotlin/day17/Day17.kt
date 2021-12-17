@@ -6,6 +6,7 @@ import kotlin.math.sign
 fun main() {
     val target = Target(xRange = 236..262, yRange = -78..-58)
     println("The flashiest height is ${target.flashiestHeight()}")
+    println("There are ${target.findAccuratePaths().size} combinations that hit the target")
 }
 
 typealias Point = Pair<Int, Int>
@@ -40,8 +41,6 @@ fun pathToTarget(dx: Int, dy: Int, target: Target): List<Point> =
 //
 // Assumptions:
 // * dx will always be positive -- The sample target is in that direction
-// * dy will always be positive -- The way ballistics works, firing up gets you higher than firing down. Besides,
-//   the max height with non-positive dy will always be 0.
 // * The far edge of the target is an upper bound for dx, because the second step is guaranteed to be
 //   past the target. In fact, that's certainly _way_ above the best dx, but I'm not sure how to pick a lower value.
 //
@@ -52,9 +51,13 @@ fun pathToTarget(dx: Int, dy: Int, target: Target): List<Point> =
 // depth of the target is guaranteed to miss it. At y = 0, the probe's dy will be at least as fast as its initial dy.
 // So, the depth of the target is an upper bound for dy.
 //
+// And if you're firing downward (negative dy) any value of dy that immediately goes lower than the target will miss,
+// so the lower bound for dy is the depth of the target.
+//
 fun Target.findAccuratePaths(): List<Path> = validDxs().flatMap { dx ->
-    generateSequence(0) { it + 1 }
-        .takeWhile { it <= abs(yRange.minOf { it })}
+    val targetDepth = yRange.minOf { it }
+    generateSequence(targetDepth) { it + 1 }
+        .takeWhile { it <= abs(targetDepth) }
         .map { dy -> pathToTarget(dx, dy, this) }
         .filter { it.hits(this) }
         .toList()

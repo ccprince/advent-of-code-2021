@@ -8,6 +8,7 @@ import kotlin.test.assertEquals
 class Day17Tests {
 
     private data class PathTestData(val dx: Int, val dy: Int, val points: List<Point>)
+
     private val testData = listOf(
         PathTestData(
             7,
@@ -74,4 +75,7 @@ class Day17Tests {
                 assertEquals(expected, path.hits(sampleTarget))
             }
         }
+
+    @Test
+    fun `finds all the combinations that hit the target`() = assertEquals(112, sampleTarget.findAccuratePaths().size)
 }
