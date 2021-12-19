@@ -14,6 +14,7 @@ fun main() {
 sealed interface SnailNumber
 
 operator fun SnailNumber.plus(other: SnailNumber): SnailNumber = SnailPair(this, other).reduced()
+
 fun SnailNumber.asString(): String = when (this) {
     is SnailPair -> "[" + left.asString() + "," + right.asString() + "]"
     is SnailRegular -> n.toString()

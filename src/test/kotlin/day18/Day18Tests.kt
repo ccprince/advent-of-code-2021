@@ -1,11 +1,8 @@
 package day18
 
-import org.junit.jupiter.api.Disabled
-import kotlin.test.Test
-
-import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class Day18Tests {
@@ -21,7 +18,7 @@ class Day18Tests {
         "[[[[1,3],[5,3]],[[1,3],[8,7]]],[[[4,9],[6,9]],[[8,2],[7,3]]]]",
     )
         .map { str ->
-            DynamicTest.dynamicTest("$str parses and prints correctly") {
+            dynamicTest("$str parses and prints correctly") {
                 val sn = snailNumberFromString(str)
                 assertEquals(str, sn.asString())
             }
